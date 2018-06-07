@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-BlueReaderAccount = {'username':'your username for bluereader', 'password':'your password'}
+BlueReaderAccount = {'username':'thinkbig', 'password':'P@ssw0rd'}
 
 # tags: rss resource name
 # list value are the xpath of the target article:

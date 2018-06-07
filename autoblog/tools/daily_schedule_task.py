@@ -38,6 +38,7 @@ class DailyScheduleTask:
 
 if __name__ =="__main__":
     daily_run = DailyScheduleTask()
-    # daily_run.run()
+    daily_run.run()
     daily_run.move_article(r'E:\_Automation\autoblog\articles', r'E:\autoblog\source\_posts')
     daily_run.publish_articles(r'E:\autoblog')
+

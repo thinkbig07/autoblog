@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
+import urllib
+
 import requests
 import sys
+
+import time
+
+from autoblog.spiders.sites import BlueReaderAccount
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -18,10 +25,10 @@ class SharedAPI(object):
         self.header_form = {'Content-Type': 'application/x-www-form-urlencoded', 'charset': 'UTF-8'}
         self.header_json = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
 
-    def get_blue_reader_token(self, username=None, pwd=None):
+    def get_blue_reader_token(self, username, pwd):
 
         login_url = SiteUrlEnum.BLUE_READER + '/index.php?do=login&act=submit'
-        parameter = {'refer':SiteUrlEnum.BLUE_READER, 'user':username, 'pwd':pwd}
+        parameter = {'referer':'http%3A%2F%2Fbluereader.org%2F', 'user':username, 'pwd':pwd}
         try:
             p = self.s.post(login_url, data=parameter, headers=self.header_form, verify=False)
             if int(p.status_code) == 200:
@@ -31,3 +38,4 @@ class SharedAPI(object):
                 return property_regex.search(c).group(1)
         except:
                 logger.exception('get token failed', exc_info=True)
+
