@@ -14,7 +14,8 @@ class DailyScheduleTask:
         logger.info("Start daily spider run at %s" % self.time)
 
     def run(self):
-        os.chdir(os.path.dirname(os.path.dirname(__file__)))
+        # os.chdir(os.path.dirname(os.path.dirname(__file__)))
+        print(os.getcwd())
         command = r'scrapy crawl %s' % BlogSpider.name
         os.system(command)
 
