@@ -38,4 +38,3 @@ class SharedAPI(object):
                 return property_regex.search(c).group(1)
         except:
                 logger.exception('get token failed', exc_info=True)
-

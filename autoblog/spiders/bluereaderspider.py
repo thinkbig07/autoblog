@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
+import traceback
+
 import scrapy
 import tomd
 import sys
@@ -25,18 +27,27 @@ class BlogSpider(scrapy.Spider):
         item = AutoblogItem()
         tags_mapping = tags_contents_mapping
         for category_posts in all_posts:
-            for k, v in category_posts.items():
-                if response.url.split("//")[1] in k or reduce(lambda x,y:x+'/'+y, response.url.split("/")[:-1]) in str(k):
-                    try:
-                        item['title'] = category_posts[k]['title']
-                        item['date'] = category_posts[k]['date']
-                        item['categories'] = category_posts[k]['categories']
-                        item['tags'] = category_posts[k]['tags']
-                        item['desc'] = category_posts[k]['desc']
-                        item['url'] = response.url.replace(response.url.split("//")[0], 'http:', 1)
-                        yield self.exact_contents(response, item, tags_mapping)
-                    except:
-                        logger.exception('parse error', exc_info=True)
+            url_key = None
+            lei_phone_url = reduce(lambda x, y: x +"/" + y, response.url.split("/")[:-1]) + '/' + response.url.split("/")[-1].split("=")[-1] + '.html'
+            xue_qiu_url = response.url.replace(response.url.split("//")[0], 'http:', 1)
+            if response.url in category_posts.keys():
+                url_key = response.url
+            elif lei_phone_url in category_posts.keys():
+                url_key = lei_phone_url
+            elif xue_qiu_url in category_posts.keys():
+                url_key = xue_qiu_url
+
+            if url_key:
+                try:
+                    item['title'] = category_posts[url_key]['title']
+                    item['date'] = category_posts[url_key]['date']
+                    item['categories'] = category_posts[url_key]['categories']
+                    item['tags'] = category_posts[url_key]['tags']
+                    item['desc'] = category_posts[url_key]['desc']
+                    item['url'] = response.url
+                    yield self.exact_contents(response, item, tags_mapping)
+                except:
+                    traceback.print_exc()
 
     def html_to_md(self, html_content):
         return self.convert_img(tomd.convert(html_content))
