@@ -18,5 +18,5 @@ tags_contents_mapping = {
     "阮一峰的网络日志":[".//*[@id='page-title']", ".//*[@id='main-content']"],
     "酷 壳 – CoolShell":[".//*[@id='main']/article/header/h1", ".//*[@id='main']/article/div"],
     "知乎日报": [".//*[@class='main-wrap content-wrap']/div[@class='headline']/div/h1",
-                                 ".//*[@class='main-wrap content-wrap']/div[@class='content-inner']/div[1]/div"]
+             ".//*[@class='main-wrap content-wrap']/div[@class='content-inner']/div[1]/div"]
                          }
